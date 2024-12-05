@@ -42,7 +42,7 @@ public final class Constants {
     public static final boolean intakeReversed = false;
 
     public static final double intake_speed = 1;
-  
+    public static final double shoot_speed = 1;  
   }
 
   public static class OperatorConstants {

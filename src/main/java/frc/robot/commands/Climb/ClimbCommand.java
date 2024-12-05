@@ -5,10 +5,8 @@
 package frc.robot.commands.Climb;
 
 import frc.robot.Constants;
-import frc.robot.Constants.ClimbConstants;
 import frc.robot.subsystems.ClimbSubsystem;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -40,14 +38,7 @@ public class ClimbCommand extends Command {
   @Override
   public void execute() {
 
-    if(up){
-
-      ClimbSubsystem.climb_motor.set(ControlMode.PercentOutput, ClimbConstants.climb_speed);
-
-    }else{
-
-      ClimbSubsystem.climb_motor.set(ControlMode.PercentOutput, ClimbConstants.climb_speed*-1);
-    }
+    ClimbSubsystem.set_Climb_motor(up);
     
   }
 
@@ -55,7 +46,7 @@ public class ClimbCommand extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    ClimbSubsystem.climb_motor.set(ControlMode.PercentOutput, 0);
+    ClimbSubsystem.stop_Climb_motor();
     
     if(Constants.sorun_cozucu){
 

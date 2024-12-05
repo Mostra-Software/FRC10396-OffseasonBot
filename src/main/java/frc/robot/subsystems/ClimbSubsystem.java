@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,6 +28,20 @@ public class ClimbSubsystem extends SubsystemBase {
   public void periodic() {
   
   }
+  
+  public static void set_Climb_motor(boolean up){
+      if(up){
 
+      climb_motor.set(ControlMode.PercentOutput, ClimbConstants.climb_speed);
+
+    }else{
+
+      climb_motor.set(ControlMode.PercentOutput, ClimbConstants.climb_speed*-1);
+    }
+  }
+
+  public static void stop_Climb_motor(){
+    climb_motor.set(ControlMode.PercentOutput, 0);
+  }
 
 }

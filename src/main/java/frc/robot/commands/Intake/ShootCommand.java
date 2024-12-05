@@ -33,7 +33,7 @@ public class ShootCommand extends Command {
   @Override
   public void execute() {
 
-      IntakeSubsystem.intake_motor.set(ControlMode.PercentOutput, IntakeConstants.intake_speed);
+      IntakeSubsystem.start_Shooter();
     
   }
 
@@ -41,8 +41,7 @@ public class ShootCommand extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    IntakeSubsystem.intake_motor.set(ControlMode.PercentOutput, 0);
-    
+    IntakeSubsystem.stop_intake();
     if(Constants.sorun_cozucu){
 
     System.out.println("Intake Command End!");
