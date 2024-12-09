@@ -43,6 +43,7 @@ public final class Constants {
 
     public static final double intake_speed = 0.5;
     public static final double shoot_speed = 0.8 ;  
+    public static final double idle_speed = 0.3;
   }
 
   public static class OperatorConstants {
