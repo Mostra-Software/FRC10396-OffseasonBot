@@ -10,9 +10,9 @@ public final class Constants {
 
     public static final int climb_motorID = 2;
     public static final NeutralMode climbNeutralMode = NeutralMode.Brake;
-    public static final boolean climbReversed = false;
+    public static final boolean climbReversed = true;
     
-    public static final double climb_speed = 0.1;
+    public static final double climb_speed = 0.3;
   }
 
    public static class DriveConstants {
@@ -22,12 +22,12 @@ public final class Constants {
     public static final int right_front_motorID = 4;
     public static final int right_rear_motorID = 5;
 
-    public static final boolean left_front_motor_reversed = false;
-    public static final boolean left_rear_motor_reversed = false;
+    public static final boolean left_front_motor_reversed = true;
+    public static final boolean left_rear_motor_reversed = true;
     public static final boolean right_front_motor_reversed = false;
     public static final boolean right_rear_motor_reversed = false;
     
-    public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
+    public static final NeutralMode driveNeutralMode = NeutralMode.Coast;
 
     
 
@@ -39,16 +39,16 @@ public final class Constants {
     public static final int intake_motorID = 0;
     public static final int intake_sensorID = 0;
     public static final NeutralMode intakeNeutralMode = NeutralMode.Brake;
-    public static final boolean intakeReversed = false;
+    public static final boolean intakeReversed = true;
 
-    public static final double intake_speed = 0.1;
-    public static final double shoot_speed = 0.1;  
+    public static final double intake_speed = 0.5;
+    public static final double shoot_speed = 0.8 ;  
   }
 
   public static class OperatorConstants {
 
-    public static final int driver_controller_port = 0;
-    public static final int operator_controller_port = 1;
+    public static final int driver_controller_port = 1;
+    public static final int operator_controller_port = 0;
   
   }
 }

@@ -34,23 +34,23 @@ public class RobotContainer {
     
     configureBindings();
 
-    /*m_driveSubsystem.setDefaultCommand(
-                new JoystickDriveCommand(m_driveSubsystem, () -> m_driverController.getLeftY() / 1.25,
-                                                            () -> m_driverController.getRightX() / 1.00));*/
+    m_driveSubsystem.setDefaultCommand(
+                new JoystickDriveCommand(m_driveSubsystem, () -> m_operatorController.getRawAxis(1) / 1.25,
+                                                            () -> m_operatorController.getRawAxis(2) / 1.00));
     
   }
 
  
   private void configureBindings() {
     // Intake Command
-    new JoystickButton(m_operatorController, 6).whileTrue(new IntakeCommand(m_intakeSubsystem));
+    new JoystickButton(m_operatorController, 7).whileTrue(new IntakeCommand(m_intakeSubsystem));
 
     // Shoot Command
-    new JoystickButton(m_operatorController, 1).whileTrue(new ShootCommand(m_intakeSubsystem));
+    new JoystickButton(m_operatorController, 8).whileTrue(new ShootCommand(m_intakeSubsystem));
 
     // Climb Command
-    new JoystickButton(m_operatorController, 1).whileTrue(new ClimbCommand(m_climbSubsystem, false));
-    new JoystickButton(m_operatorController, 8).whileTrue(new ClimbCommand(m_climbSubsystem, true));
+    new JoystickButton(m_operatorController, 2).whileTrue(new ClimbCommand(m_climbSubsystem, false));
+    new JoystickButton(m_operatorController,4 ).whileTrue(new ClimbCommand(m_climbSubsystem, true));
   
   }
 

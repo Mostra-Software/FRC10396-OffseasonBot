@@ -33,11 +33,11 @@ public class ClimbSubsystem extends SubsystemBase {
     
       if(up){
     
-      climb_motor.set(ControlMode.PercentOutput, ClimbConstants.climb_speed);
+      climb_motor.set(ControlMode.PercentOutput, 0.8);
 
     }else{
 
-      climb_motor.set(ControlMode.PercentOutput, ClimbConstants.climb_speed);
+      climb_motor.set(ControlMode.PercentOutput, -ClimbConstants.climb_speed);
     }
   }
 

@@ -52,7 +52,7 @@ public class IntakeCommand extends Command {
   @Override
   public boolean isFinished() {
 
-    return !IntakeSubsystem.is_gp_present();
+    return IntakeSubsystem.is_gp_present();
 
   }
 }

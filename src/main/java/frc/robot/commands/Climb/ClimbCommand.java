@@ -7,8 +7,6 @@ package frc.robot.commands.Climb;
 import frc.robot.Constants;
 import frc.robot.subsystems.ClimbSubsystem;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -39,7 +37,6 @@ public class ClimbCommand extends Command {
   @Override
   public void execute() {
 
-    //ClimbSubsystem.climb_motor.set(ControlMode.PercentOutput, 0.3);
     ClimbSubsystem.set_Climb_motor(up);
     
   }
