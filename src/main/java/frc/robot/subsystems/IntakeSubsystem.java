@@ -12,9 +12,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.RobotState;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -34,29 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
   
     if(Constants.sorun_cozucu){
       SmartDashboard.putBoolean("Intake Sensor", is_gp_present());
-      
-      SmartDashboard.putString("ROBOT STATE", RobotContainer.m_RobotState.name());
     }
-
-    if(!(RobotContainer.m_RobotState == RobotState.SHOOTING)){
-
-      if(is_gp_present() && !(RobotContainer.m_RobotState == RobotState.INTAKING)){
-    
-        RobotContainer.m_RobotState = RobotState.READY;
-        idle_Intake();
-
-      }else if(!is_gp_present() && !(RobotContainer.m_RobotState == RobotState.INTAKING)){
-
-        RobotContainer.m_RobotState = RobotState.IDLE;
-        stop_intake();
-      
-    }
-
-
-  
-  }
-
-
 
   }
 
@@ -66,10 +42,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public static void start_Intake(){
       intake_motor.set(ControlMode.PercentOutput, IntakeConstants.intake_speed*-1);
-  }
-
-  public static void idle_Intake(){
-    intake_motor.set(ControlMode.PercentOutput, IntakeConstants.idle_speed*-1);
   }
 
   public static void start_Shooter(){

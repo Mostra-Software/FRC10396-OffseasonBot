@@ -1,17 +1,15 @@
 package frc.robot.commands.Intake;
 
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.RobotState;
 import frc.robot.subsystems.IntakeSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 
 public class IntakeCommand extends Command {
-
-  public IntakeCommand(IntakeSubsystem subsystem) {
-
+  private boolean sensor_aktif = true;
+  public IntakeCommand(IntakeSubsystem subsystem, boolean sensor_aktif ) {
+    this.sensor_aktif = sensor_aktif;
     addRequirements(subsystem);
 
   }
@@ -19,8 +17,6 @@ public class IntakeCommand extends Command {
 
   @Override
   public void initialize() {
-
-    RobotContainer.m_RobotState = RobotState.INTAKING;
 
     if(Constants.sorun_cozucu){
 
@@ -43,8 +39,6 @@ public class IntakeCommand extends Command {
   public void end(boolean interrupted) {
 
     IntakeSubsystem.stop_intake();
-
-    RobotContainer.m_RobotState = RobotState.IDLE;
     
     if(Constants.sorun_cozucu){
 
@@ -57,8 +51,11 @@ public class IntakeCommand extends Command {
 
   @Override
   public boolean isFinished() {
-
+    if(sensor_aktif){
     return IntakeSubsystem.is_gp_present();
+    }else{
+      return false;
+    }
 
   }
 }
