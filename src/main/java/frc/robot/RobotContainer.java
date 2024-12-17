@@ -4,10 +4,12 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Climb.ClimbCommand;
 import frc.robot.commands.Drive.JoystickDriveCommand;
+import frc.robot.commands.Intake.AmpSequence;
 import frc.robot.commands.Intake.IntakeCommand;
+import frc.robot.commands.Intake.RunIntake;
 import frc.robot.commands.Intake.ShootCommand;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -28,8 +30,8 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
-  private final CommandPS4Controller m_driverController = new CommandPS4Controller(OperatorConstants.driver_controller_port);
-  public static XboxController m_operatorController = new XboxController(OperatorConstants.operator_controller_port);
+  private final CommandPS4Controller m_driverController = new CommandPS4Controller(JoystickConstants.driver);
+  public static XboxController m_operatorController = new XboxController(JoystickConstants.operator);
 
 
 
@@ -46,17 +48,19 @@ public class RobotContainer {
  
   private void configureBindings() {
     // Intake Command
-    
+    /*
     new JoystickButton(m_operatorController, 7).
       whileTrue(new SequentialCommandGroup(new IntakeCommand(m_intakeSubsystem, true)));
+     */
+    new JoystickButton(m_operatorController, 7)
+      .whileTrue(new RunIntake(m_intakeSubsystem, m_operatorController));
 
-      new JoystickButton(m_operatorController, 3).
-          onTrue(new ParallelRaceGroup(new WaitCommand(0.05),new IntakeCommand(m_intakeSubsystem, false)));
-       
-                  
+    new JoystickButton(m_operatorController, 3)
+      .onTrue(new ParallelRaceGroup(new WaitCommand(0.05),new IntakeCommand(m_intakeSubsystem, false)));
 
     // Shoot Command
-    new JoystickButton(m_operatorController, 8).whileTrue(new ShootCommand(m_intakeSubsystem));
+    //new JoystickButton(m_operatorController, 8).whileTrue(new ShootCommand(m_intakeSubsystem));
+    new JoystickButton(m_operatorController, 8).whileTrue(new AmpSequence(m_intakeSubsystem));
 
     // Climb Command
     new JoystickButton(m_operatorController, 2).whileTrue(new ClimbCommand(m_climbSubsystem, false));

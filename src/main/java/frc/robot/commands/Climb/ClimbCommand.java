@@ -4,7 +4,6 @@
 
 package frc.robot.commands.Climb;
 
-import frc.robot.Constants;
 import frc.robot.subsystems.ClimbSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,13 +23,6 @@ public class ClimbCommand extends Command {
 
   @Override
   public void initialize() {
-
-    if(Constants.sorun_cozucu){
-
-    System.out.println("Climb Command Start!");
-
-    }
-
   }
 
 
@@ -46,13 +38,6 @@ public class ClimbCommand extends Command {
   public void end(boolean interrupted) {
 
     ClimbSubsystem.stop_Climb_motor();
-    
-    if(Constants.sorun_cozucu){
-
-    System.out.println("Climb Command End!");
-    
-  }
-    
   }
 
 

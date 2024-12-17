@@ -7,30 +7,25 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 
 public class IntakeCommand extends Command {
-  private boolean sensor_aktif = true;
-  public IntakeCommand(IntakeSubsystem subsystem, boolean sensor_aktif ) {
-    this.sensor_aktif = sensor_aktif;
-    addRequirements(subsystem);
+  private boolean lsAttached = true;
+  private IntakeSubsystem intake;
 
+  public IntakeCommand(IntakeSubsystem intake, boolean limitSwitchAttached ) {
+    this.intake = intake;
+    this.lsAttached = limitSwitchAttached;
+    addRequirements(intake);
   }
-
 
   @Override
   public void initialize() {
-
-    if(Constants.sorun_cozucu){
-
-    System.out.println("Intake Command Start!");
-
-    }
-
   }
 
 
   @Override
   public void execute() {
-
-    IntakeSubsystem.start_Intake();
+    if(!intake.is_gp_present()){
+      intake.intake();
+    }
     
   }
 
@@ -38,21 +33,15 @@ public class IntakeCommand extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    IntakeSubsystem.stop_intake();
-    
-    if(Constants.sorun_cozucu){
-
-    System.out.println("Intake Command End!");
-    
-  }
+    intake.stop();
     
   }
 
 
   @Override
   public boolean isFinished() {
-    if(sensor_aktif){
-    return IntakeSubsystem.is_gp_present();
+    if(lsAttached){
+    return intake.is_gp_present();
     }else{
       return false;
     }

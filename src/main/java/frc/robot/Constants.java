@@ -4,15 +4,14 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public final class Constants {
 
-  public static boolean sorun_cozucu = true;
+  public static boolean debugger = false;
   
    public static class ClimbConstants {
 
-    public static final int climb_motorID = 2;
-    public static final NeutralMode climbNeutralMode = NeutralMode.Brake;
-    public static final boolean climbReversed = true;
-    
-    public static final double climb_speed = 0.3;
+    public static final int motorID = 2;
+    public static final NeutralMode neutralMode = NeutralMode.Brake;
+    public static final boolean reversed = true;
+    public static final double speed = 0.3;
   }
 
    public static class DriveConstants {
@@ -27,28 +26,26 @@ public final class Constants {
     public static final boolean right_front_motor_reversed = false;
     public static final boolean right_rear_motor_reversed = false;
     
-    public static final NeutralMode driveNeutralMode = NeutralMode.Coast;
-
-    
-
-
+    public static final NeutralMode neutralMode = NeutralMode.Coast;
+    public static double kSpeedRateLimit = 6;
+    public static double kRotRateLimit = 6;
   }
 
    public static class IntakeConstants {
 
-    public static final int intake_motorID = 0;
-    public static final int intake_sensorID = 0;
-    public static final NeutralMode intakeNeutralMode = NeutralMode.Brake;
-    public static final boolean intakeReversed = true;
+    public static final int motorID = 0;
+    public static final int sensorID = 0;
+    public static final NeutralMode neutralMode = NeutralMode.Brake;
+    public static final boolean reversed = true;
 
     public static final double intake_speed = 0.5;
-    public static final double shoot_speed = 0.8 ;  
+    public static final double shoot_speed = 1;  
   }
 
-  public static class OperatorConstants {
+  public static class JoystickConstants {
 
-    public static final int driver_controller_port = 1;
-    public static final int operator_controller_port = 0;
+    public static final int driver = 1;
+    public static final int operator = 0;
   
   }
 }

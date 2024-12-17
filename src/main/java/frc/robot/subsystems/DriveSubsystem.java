@@ -21,16 +21,16 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
 
     left_front_motor.setInverted(DriveConstants.left_front_motor_reversed);
-    left_front_motor.setNeutralMode(DriveConstants.driveNeutralMode);
+    left_front_motor.setNeutralMode(DriveConstants.neutralMode);
 
     left_rear_motor.setInverted(DriveConstants.left_rear_motor_reversed);
-    left_rear_motor.setNeutralMode(DriveConstants.driveNeutralMode);
+    left_rear_motor.setNeutralMode(DriveConstants.neutralMode);
 
     right_front_motor.setInverted(DriveConstants.right_front_motor_reversed);
-    right_front_motor.setNeutralMode(DriveConstants.driveNeutralMode);
+    right_front_motor.setNeutralMode(DriveConstants.neutralMode);
 
     right_rear_motor.setInverted(DriveConstants.right_rear_motor_reversed);
-    right_rear_motor.setNeutralMode(DriveConstants.driveNeutralMode);
+    right_rear_motor.setNeutralMode(DriveConstants.neutralMode);
 
     right_rear_motor.follow(right_front_motor);
     left_rear_motor.follow(left_front_motor);

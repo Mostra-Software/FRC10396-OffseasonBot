@@ -14,12 +14,12 @@ import frc.robot.Constants.ClimbConstants;
 
 public class ClimbSubsystem extends SubsystemBase {
 
-  public static final VictorSPX climb_motor = new VictorSPX(ClimbConstants.climb_motorID);
+  public static final VictorSPX climb_motor = new VictorSPX(ClimbConstants.motorID);
   
   public ClimbSubsystem() {
 
-    climb_motor.setInverted(ClimbConstants.climbReversed);
-    climb_motor.setNeutralMode(ClimbConstants.climbNeutralMode);
+    climb_motor.setInverted(ClimbConstants.reversed);
+    climb_motor.setNeutralMode(ClimbConstants.neutralMode);
     
   }
 
@@ -37,7 +37,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     }else{
 
-      climb_motor.set(ControlMode.PercentOutput, -ClimbConstants.climb_speed);
+      climb_motor.set(ControlMode.PercentOutput, -ClimbConstants.speed);
     }
   }
 
