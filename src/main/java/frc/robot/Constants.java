@@ -67,5 +67,6 @@ public final class Constants {
 
     public static final double intakeSpeed = -0.5;
     public static final double shootSpeed = 1;
+    public static final double rumbleStrength = 0.3;
   }
 }
