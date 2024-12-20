@@ -26,6 +26,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 public final class Constants {
   public static final Mode currentMode = Mode.SIM;
 
+  public boolean isSIM() {
+    return currentMode == Mode.SIM;
+  }
+
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
@@ -52,5 +56,16 @@ public final class Constants {
     public static final NeutralMode neutralMode = NeutralMode.Coast;
     public static final double kSpeedRateLimit = 6;
     public static final double kRotRateLimit = 6;
+  }
+
+  public static class IntakeConstants {
+
+    public static final int motorID = 0;
+    public static final int sensorID = 0;
+    public static final NeutralMode neutralMode = NeutralMode.Brake;
+    public static final boolean reversed = true;
+
+    public static final double intakeSpeed = -0.5;
+    public static final double shootSpeed = 1;
   }
 }

@@ -1,0 +1,31 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.commands.intake;
+
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.intake.Intake;
+
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class RunIntake extends SequentialCommandGroup {
+  /** Creates a new RunIntake. */
+  private Intake intake;
+
+  private CommandXboxController controller;
+
+  public RunIntake(Intake intake, CommandXboxController controller) {
+    this.intake = intake;
+    this.controller = controller;
+
+    addCommands(
+        new RunCommand(() -> intake.intake(), intake).until(intake::isGPPresent),
+        new RunCommand(() -> intake.stop(), intake),
+        new RunCommand(() -> controller.getHID().setRumble(RumbleType.kBothRumble, 0.5)));
+  }
+}

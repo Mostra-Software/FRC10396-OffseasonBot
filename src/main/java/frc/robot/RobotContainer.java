@@ -14,10 +14,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.intake.AmpSequence;
+import frc.robot.commands.intake.RunIntake;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOSim;
@@ -26,6 +32,10 @@ import frc.robot.subsystems.flywheel.Flywheel;
 import frc.robot.subsystems.flywheel.FlywheelIO;
 import frc.robot.subsystems.flywheel.FlywheelIOSim;
 import frc.robot.subsystems.flywheel.FlywheelIOSparkMax;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOSim;
+import frc.robot.subsystems.intake.IntakeIOVictorSPX;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 /**
@@ -38,6 +48,7 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Flywheel flywheel;
+  private final Intake intake;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -54,20 +65,21 @@ public class RobotContainer {
         // Real robot, instantiate hardware IO implementations
         drive = new Drive(new DriveIOVictorSPX());
         flywheel = new Flywheel(new FlywheelIOSparkMax());
-        // drive = new Drive(new DriveIOTalonFX());
-        // flywheel = new Flywheel(new FlywheelIOTalonFX());
+        intake = new Intake(new IntakeIOVictorSPX());
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         drive = new Drive(new DriveIOSim());
         flywheel = new Flywheel(new FlywheelIOSim());
+        intake = new Intake(new IntakeIOSim());
         break;
 
       default:
         // Replayed robot, disable IO implementations
         drive = new Drive(new DriveIO() {});
         flywheel = new Flywheel(new FlywheelIO() {});
+        intake = new Intake(new IntakeIO() {});
         break;
     }
     // Configure the button bindings
@@ -98,12 +110,20 @@ public class RobotContainer {
                     applyDeadband(controller.getLeftX(), 0.05),
                     controller.rightBumper().getAsBoolean()),
             drive));
-    
+
     controller
         .a()
-        .whileTrue(
-            Commands.startEnd(
-                () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));
+        .onTrue(new RunIntake(intake, controller))
+        .onFalse(new RunCommand(() -> intake.stop(), intake));
+
+    controller
+        .b()
+        .onTrue(new AmpSequence(intake))
+        .onFalse(
+            new ParallelCommandGroup(
+                new RunCommand(() -> intake.stop(), intake),
+                new InstantCommand(
+                    () -> controller.getHID().setRumble(RumbleType.kBothRumble, 0))));
   }
 
   /**
