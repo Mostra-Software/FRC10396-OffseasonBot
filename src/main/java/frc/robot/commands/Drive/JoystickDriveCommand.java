@@ -16,16 +16,14 @@ public class JoystickDriveCommand extends Command {
 
   private final DoubleSupplier m_left;
   private final DoubleSupplier m_right;
-  private final BooleanSupplier turnInPlace;
   private final SlewRateLimiter speedLimiter = new SlewRateLimiter(DriveConstants.kSpeedRateLimit);
   private final SlewRateLimiter rotLimiter = new SlewRateLimiter(DriveConstants.kRotRateLimit);
 
 
-  public JoystickDriveCommand(DriveSubsystem drive, DoubleSupplier left, DoubleSupplier right, BooleanSupplier turnInPlace) {
+  public JoystickDriveCommand(DriveSubsystem drive, DoubleSupplier left, DoubleSupplier right) {
     this.m_drive = drive;
     this.m_left = left;
     this.m_right = right;
-    this.turnInPlace = turnInPlace;
     addRequirements(m_drive);
   }
 
@@ -35,10 +33,9 @@ public class JoystickDriveCommand extends Command {
 
   @Override
   public void execute() {
-    DriveSubsystem.drive_.curvatureDrive(
+    DriveSubsystem.drive_.arcadeDrive(
     speedLimiter.calculate(m_left.getAsDouble()), 
-    rotLimiter.calculate(m_right.getAsDouble()),
-    turnInPlace.getAsBoolean()
+    rotLimiter.calculate(m_right.getAsDouble())
     );
   }
 
