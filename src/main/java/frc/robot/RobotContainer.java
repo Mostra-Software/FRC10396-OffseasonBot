@@ -45,7 +45,7 @@ public class RobotContainer {
     m_driveSubsystem.setDefaultCommand(
                 new JoystickDriveCommand(m_driveSubsystem, () -> m_operatorController.getRawAxis(1),
                                                             () -> m_operatorController.getRawAxis(2),
-                                                            () -> m_operatorController.getRightBumperPressed()));
+                                                            () -> m_operatorController.getRawButton(10)));
     
   }
 
@@ -63,9 +63,7 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, 7)
       .whileTrue(new RunIntake(m_intakeSubsystem, m_operatorController))
       .onFalse(
-        new RunCommand(()-> m_intakeSubsystem.stop(), m_intakeSubsystem)
-        .alongWith(new InstantCommand(()-> m_operatorController.setRumble(RumbleType.kBothRumble,0)))
-        );
+        new RunCommand(()-> m_intakeSubsystem.stop(), m_intakeSubsystem)        );
 
     // Shoot Command (onceki haftalarda kullandiginiz)
     //new JoystickButton(m_operatorController, 8).whileTrue(new ShootCommand(m_intakeSubsystem));

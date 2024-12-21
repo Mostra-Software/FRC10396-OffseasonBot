@@ -26,9 +26,7 @@ public class RunIntake extends SequentialCommandGroup {
     addCommands(
       new RunCommand(() -> intake.intake(), intake)
       .until(intake::is_gp_present),
-      new RunCommand(() -> intake.stop(), intake),
-      new RunCommand(() -> controller.setRumble(RumbleType.kBothRumble, IntakeConstants.rumbleStrength))
-    );
+      new RunCommand(() -> intake.stop(), intake));
     
   }
 }
