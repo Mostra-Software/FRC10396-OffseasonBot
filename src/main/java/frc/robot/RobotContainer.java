@@ -43,8 +43,9 @@ public class RobotContainer {
     configureBindings();
 
     m_driveSubsystem.setDefaultCommand(
-                new JoystickDriveCommand(m_driveSubsystem, () -> m_operatorController.getRawAxis(1) / 1.25,
-                                                            () -> m_operatorController.getRawAxis(2) * 0.75));
+                new JoystickDriveCommand(m_driveSubsystem, () -> m_operatorController.getRawAxis(1),
+                                                            () -> m_operatorController.getRawAxis(2),
+                                                            () -> m_operatorController.getRightBumperPressed()));
     
   }
 
