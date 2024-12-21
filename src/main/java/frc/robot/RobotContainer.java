@@ -15,8 +15,11 @@ import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
@@ -30,7 +33,7 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
-  private final CommandPS4Controller m_driverController = new CommandPS4Controller(JoystickConstants.driver);
+  //private final CommandPS4Controller m_driverController = new CommandPS4Controller(JoystickConstants.driver);
   public static XboxController m_operatorController = new XboxController(JoystickConstants.operator);
 
 
@@ -47,20 +50,28 @@ public class RobotContainer {
 
  
   private void configureBindings() {
-    // Intake Command
+    // Eski Intake Commandi (onceki haftalardan)
     /*
     new JoystickButton(m_operatorController, 7).
       whileTrue(new SequentialCommandGroup(new IntakeCommand(m_intakeSubsystem, true)));
-     */
-    new JoystickButton(m_operatorController, 7)
-      .whileTrue(new RunIntake(m_intakeSubsystem, m_operatorController));
-
-    new JoystickButton(m_operatorController, 3)
+     new JoystickButton(m_operatorController, 3)
       .onTrue(new ParallelRaceGroup(new WaitCommand(0.05),new IntakeCommand(m_intakeSubsystem, false)));
 
-    // Shoot Command
+     */
+
+    new JoystickButton(m_operatorController, 7)
+      .whileTrue(new RunIntake(m_intakeSubsystem, m_operatorController))
+      .onFalse(
+        new RunCommand(()-> m_intakeSubsystem.stop(), m_intakeSubsystem)
+        .alongWith(new InstantCommand(()-> m_operatorController.setRumble(RumbleType.kBothRumble,0)))
+        );
+
+    // Shoot Command (onceki haftalarda kullandiginiz)
     //new JoystickButton(m_operatorController, 8).whileTrue(new ShootCommand(m_intakeSubsystem));
-    new JoystickButton(m_operatorController, 8).whileTrue(new AmpSequence(m_intakeSubsystem));
+    //ampe birakma commandi
+    new JoystickButton(m_operatorController, 8)
+    .whileTrue(new AmpSequence(m_intakeSubsystem))
+    .onFalse(new RunCommand(()-> m_intakeSubsystem.stop(), m_intakeSubsystem));
 
     // Climb Command
     new JoystickButton(m_operatorController, 2).whileTrue(new ClimbCommand(m_climbSubsystem, false));

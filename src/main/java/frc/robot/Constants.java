@@ -39,7 +39,9 @@ public final class Constants {
     public static final boolean reversed = true;
 
     public static final double intake_speed = 0.5;
-    public static final double shoot_speed = 1;  
+    public static final double shoot_speed = 1;
+    public static final double ampSequenceTimeout = 0.6;
+    public static final double rumbleStrength = 0.3;  
   }
 
   public static class JoystickConstants {

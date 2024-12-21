@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -26,11 +27,8 @@ public class RunIntake extends SequentialCommandGroup {
       new RunCommand(() -> intake.intake(), intake)
       .until(intake::is_gp_present),
       new RunCommand(() -> intake.stop(), intake),
-      new RunCommand(() -> controller.setRumble(RumbleType.kBothRumble, 0.5)),
-      new WaitCommand(0.6),
-      new RunCommand(() -> controller.setRumble(RumbleType.kBothRumble, 0))
+      new RunCommand(() -> controller.setRumble(RumbleType.kBothRumble, IntakeConstants.rumbleStrength))
     );
     
-    finallyDo(() -> intake.stop());
   }
 }

@@ -7,6 +7,7 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -19,9 +20,8 @@ public class AmpSequence extends SequentialCommandGroup {
    
     addCommands(
         new RunCommand(() -> intake.intake(), intake)
-        .withTimeout(0.5),
+        .withTimeout(IntakeConstants.ampSequenceTimeout),
         new RunCommand(() -> intake.shoot(), intake));
-    finallyDo(() -> intake.stop());
 
   }
 }
