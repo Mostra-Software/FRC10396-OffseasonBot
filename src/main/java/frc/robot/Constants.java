@@ -72,7 +72,7 @@ public final class Constants {
   public static class IntakeConstants {
 
     public static final int motorID = 0;
-    public static final int sensorID = 0;
+    public static final int sensorID = 9;
     public static final NeutralMode neutralMode = NeutralMode.Brake;
     public static final boolean reversed = true;
 
