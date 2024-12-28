@@ -13,8 +13,6 @@
 
 package frc.robot;
 
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -39,6 +37,7 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOSim;
 import frc.robot.subsystems.intake.IntakeIOVictorSPX;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -87,21 +86,24 @@ public class RobotContainer {
     }
 
     autoChooser = new LoggedDashboardChooser<>("Otonom");
-    autoChooser.addOption("3sn Geri", new DriveBackwards(drive, 3));
-    autoChooser.addOption("5sn Geri", new DriveBackwards(drive, 5));
+    autoChooser.addOption(
+        "3sn Geri", new RunCommand(() -> drive.driveArcade(-0.8, 0), drive).withTimeout(3));
+    autoChooser.addOption(
+        "5sn Geri", new RunCommand(() -> drive.driveArcade(-0.8, 0), drive).withTimeout(5));
     autoChooser.addOption("Yerinde Dur", new WaitCommand(13));
-    autoChooser.addOption("5sn bekle, 3sn Geri", new SequentialCommandGroup(
-      new WaitCommand(5),
-      new DriveBackwards(drive, 3)
-    ));
-    autoChooser.addOption("5sn bekle, 5sn Geri", new SequentialCommandGroup(
-      new WaitCommand(5),
-      new DriveBackwards(drive, 5)
-    ));
-    autoChooser.addOption("10sn bekle, 3sn Geri", new SequentialCommandGroup(
-      new WaitCommand(10),
-      new DriveBackwards(drive, 3)
-    ));
+    autoChooser.addOption(
+        "5sn bekle, 3sn Geri",
+        new SequentialCommandGroup(
+            new WaitCommand(5),
+            new RunCommand(() -> drive.driveArcade(-0.8, 0), drive).withTimeout(3)));
+    autoChooser.addOption(
+        "5sn bekle, 5sn Geri",
+        new SequentialCommandGroup(
+            new WaitCommand(5),
+            new RunCommand(() -> drive.driveArcade(-0.8, 0), drive).withTimeout(5)));
+    autoChooser.addOption(
+        "10sn bekle, 3sn Geri",
+        new SequentialCommandGroup(new WaitCommand(10), new DriveBackwards(drive, 3)));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -138,6 +140,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.get();
-    //return new DriveBackwards(drive, 3);
+    // return new DriveBackwards(drive, 3);
   }
 }
