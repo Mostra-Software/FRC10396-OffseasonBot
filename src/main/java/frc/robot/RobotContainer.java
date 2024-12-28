@@ -13,11 +13,15 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climb.Climb;
 import frc.robot.commands.drive.DriveBackwards;
@@ -51,6 +55,8 @@ public class RobotContainer {
   // Controller
   private final Joystick controller = new Joystick(0);
 
+  private final LoggedDashboardChooser<Command> autoChooser;
+
   // Dashboard inputs
   // private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -79,6 +85,23 @@ public class RobotContainer {
 
         break;
     }
+
+    autoChooser = new LoggedDashboardChooser<>("Otonom");
+    autoChooser.addOption("3sn Geri", new DriveBackwards(drive, 3));
+    autoChooser.addOption("5sn Geri", new DriveBackwards(drive, 5));
+    autoChooser.addOption("Yerinde Dur", new WaitCommand(13));
+    autoChooser.addOption("5sn bekle, 3sn Geri", new SequentialCommandGroup(
+      new WaitCommand(5),
+      new DriveBackwards(drive, 3)
+    ));
+    autoChooser.addOption("5sn bekle, 5sn Geri", new SequentialCommandGroup(
+      new WaitCommand(5),
+      new DriveBackwards(drive, 5)
+    ));
+    autoChooser.addOption("10sn bekle, 3sn Geri", new SequentialCommandGroup(
+      new WaitCommand(10),
+      new DriveBackwards(drive, 3)
+    ));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -114,7 +137,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // return autoChooser.get();
-    return new DriveBackwards(drive, 3);
+    return autoChooser.get();
+    //return new DriveBackwards(drive, 3);
   }
 }
