@@ -87,20 +87,20 @@ public class RobotContainer {
 
     autoChooser = new LoggedDashboardChooser<>("Otonom");
     autoChooser.addOption(
-        "3sn Geri", new RunCommand(() -> drive.driveArcade(-0.8, 0), drive).withTimeout(3));
+        "2sn Geri", new RunCommand(() -> drive.driveArcade(-0.6, 0), drive).withTimeout(2));
     autoChooser.addOption(
-        "5sn Geri", new RunCommand(() -> drive.driveArcade(-0.8, 0), drive).withTimeout(5));
+        "5sn Geri", new RunCommand(() -> drive.driveArcade(-0.6, 0), drive).withTimeout(5));
     autoChooser.addOption("Yerinde Dur", new WaitCommand(13));
     autoChooser.addOption(
-        "5sn bekle, 3sn Geri",
+        "5sn bekle, 2sn Geri",
         new SequentialCommandGroup(
             new WaitCommand(5),
-            new RunCommand(() -> drive.driveArcade(-0.8, 0), drive).withTimeout(3)));
+            new RunCommand(() -> drive.driveArcade(-0.6, 0), drive).withTimeout(2)));
     autoChooser.addOption(
         "5sn bekle, 5sn Geri",
         new SequentialCommandGroup(
             new WaitCommand(5),
-            new RunCommand(() -> drive.driveArcade(-0.8, 0), drive).withTimeout(5)));
+            new RunCommand(() -> drive.driveArcade(-0.6, 0), drive).withTimeout(5)));
     autoChooser.addOption(
         "10sn bekle, 3sn Geri",
         new SequentialCommandGroup(new WaitCommand(10), new DriveBackwards(drive, 3)));
